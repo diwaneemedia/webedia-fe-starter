@@ -4,17 +4,15 @@
   "description": "Webpack FrontEnd starter with yarn",
   "main": "index.js",
   "scripts": {
-    "dev-live": "webpack --watch --progress --config=dev.config.js",
-    "dev-local": "webpack-dev-server --hot --progress --colors --config=dev.config.js",
-    "build": "webpack --progress --config=build.config.js",
-    "prod": "webpack -p --progress --config=build.config.js"
+    "dev-local": "webpack-dev-server --hot --progress --colors --config=webpack_config/dev.config.js",
+    "dev": "webpack --watch --progress --config=webpack_config/dev.config.js",
+    "build": "webpack --progress --config=webpack_config/build.config.js",
+    "prod": "webpack -p --progress --config=webpack_config/build.config.js"
   },
   "author": "Bojan Knezevic",
   "license": "MIT",
-  "dependencies": {
-    "webpack": "^3.10.0"
-  },
   "devDependencies": {
+    "webpack": "^3.10.0",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
     "babel-preset-env": "^1.6.1",

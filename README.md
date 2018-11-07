@@ -30,7 +30,7 @@ Install **yarn:** [Installation instructions](https://yarnpkg.com/en/docs/instal
 
 ### Commands:
 * ```yarn run dev-local``` - Runs webpack-dev-server for development mode, use when working on local static project
-* ```yarn run dev-live``` - Runs webpack in watch mode, use when working on the development server in vagrant
+* ```yarn run dev``` - Runs webpack in watch mode, use when working on the development server in vagrant
 * ```yarn run build``` - Bundle code once, and exit
 * ```yarn run prod``` - Bundle code for production, includes css and javascript minification
 

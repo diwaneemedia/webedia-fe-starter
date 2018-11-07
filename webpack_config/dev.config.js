@@ -1,17 +1,13 @@
 var ExtractTextPlugin = require("extract-text-webpack-plugin"),
     WebpackBuildNotifierPlugin = require('webpack-build-notifier'),
-    path = require('path');
-
-// ----- Output file paths
-var outputDir = 'html/',
-    cssOutput = 'css/styles.css',
-    jsOutput = 'js/master.bundle.js';
+    path = require('path'),
+    dirs = require('./dirs.js');
 
 module.exports = {
-    entry: './src/main.js',
+    entry: dirs.entry,
     output: {
-        path: path.resolve(__dirname, outputDir),
-        filename: jsOutput
+        path: dirs.output,
+        filename: dirs.jsOutput
     },
     devtool: 'source-map',
     module: {
@@ -32,7 +28,7 @@ module.exports = {
                     fallback: "style-loader",
                     use: [
                         { loader: "css-loader", options: { sourceMap: true, url: false } },
-                        { loader: "postcss-loader", options: { sourceMap: true } },
+                        // { loader: "postcss-loader", options: { sourceMap: true } },
                         {
                             loader: "sass-loader",
                             options: {
@@ -48,7 +44,7 @@ module.exports = {
     },
     // ----- Webpack dev server options
     devServer: {
-        contentBase: path.join(__dirname, outputDir),
+        contentBase: dirs.output,
         watchContentBase: true,
         compress: true,
         port: 3300,
@@ -62,7 +58,7 @@ module.exports = {
     plugins: [
         // ----- Output compiled css file
         new ExtractTextPlugin({
-            filename: cssOutput,
+            filename: dirs.cssOutput,
             allChunks: true
         }),
         new WebpackBuildNotifierPlugin({

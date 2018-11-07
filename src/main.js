@@ -1,13 +1,13 @@
 // ----- Main app file
-
-var $ = require('jquery');
+const $ = require('jquery');
+window.$ = require('jquery');
 window.app = {};
 
 // ----- Path to main SCSS file
-var css = require('./scss/style.scss');
+const css = require('./scss/style.scss');
 
 // ----- Require modules here
-var testLog = require('./js/test/test.js');
+const testLog = require('./js/test/test.js');
 
 // ----- Call modules here
 $(document).ready(function() {
