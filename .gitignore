@@ -5,7 +5,6 @@
 *.old
 .svn
 node_modules/
-vendor/
 
 # OS junk files
 [Tt]humbs.db

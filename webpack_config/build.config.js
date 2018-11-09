@@ -1,12 +1,12 @@
-var ExtractTextPlugin = require("extract-text-webpack-plugin"),
-    path = require('path'),
-    dirs = require('./dirs.js');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin"),
+      path = require('path'),
+      paths = require('./paths.js');
 
 module.exports = {
-    entry: dirs.entry,
+    entry: paths.entry,
     output: {
-        path: dirs.output,
-        filename: dirs.jsOutput
+        path: paths.output,
+        filename: paths.jsOutput
     },
     module: {
         rules: [
@@ -20,28 +20,29 @@ module.exports = {
             },
             {
                 test: /\.scss$/,
-                use: ExtractTextPlugin.extract({
-                    fallback: "style-loader",
-                    use: [
-                        {
-                            loader: 'css-loader',
-                            options: {
-                                url: false
-                            }
-                        },
-                        {
-                            loader: 'postcss-loader',
-                            options: {
-                                config: {
-                                    path: path.resolve(__dirname, 'postcss.config.js')
-                                }
-                            }
-                        },
-                        'sass-loader'
-                    ]
-                })
+                use: [
+                    {
+                        loader: MiniCssExtractPlugin.loader
+                    },
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            url: false
+                        }
+                    },
+                    {
+                        loader: 'postcss-loader',
+                        options: {
+                            ident: 'postcss',
+                            plugins: [
+                              require('autoprefixer')
+                            ]
+                        }
+                    },
+                    'sass-loader'
+                ]
             }
         ]
     },
-    plugins: [ new ExtractTextPlugin(dirs.cssOutput) ]
+    plugins: [ new MiniCssExtractPlugin({ filename: paths.cssOutput }) ]
 };

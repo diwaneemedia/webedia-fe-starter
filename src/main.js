@@ -1,15 +1,20 @@
 // ----- Main app file
 const $ = require('jquery');
-window.$ = require('jquery');
+
+window.$ = $;
+window.jQuery = $;
 window.app = {};
 
-// ----- Path to main SCSS file
-const css = require('./scss/style.scss');
-
 // ----- Require modules here
-const testLog = require('./js/test/test.js');
+import { hrl, stats, WB } from './js/common/common.js';
+
+// ----- Path to main SCSS file
+// const css = require('./scss/style.scss');
+import * as css from './scss/style.scss';
 
 // ----- Call modules here
 $(document).ready(function() {
-    testLog();
+    window.WB = WB;
+    window.stats = stats;
+    hrl();
 });

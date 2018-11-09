@@ -1,14 +1,15 @@
-var ExtractTextPlugin = require("extract-text-webpack-plugin"),
-    WebpackBuildNotifierPlugin = require('webpack-build-notifier'),
-    path = require('path'),
-    dirs = require('./dirs.js');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin"),
+      WebpackBuildNotifierPlugin = require('webpack-build-notifier'),
+      path = require('path'),
+      paths = require('./paths.js');
 
 module.exports = {
-    entry: dirs.entry,
+    entry: paths.entry,
     output: {
-        path: dirs.output,
-        filename: dirs.jsOutput
+        path: paths.output,
+        filename: paths.jsOutput
     },
+    mode: 'development',
     devtool: 'source-map',
     module: {
         rules: [
@@ -24,27 +25,31 @@ module.exports = {
             // ----- SCSS compiling
             {
                 test: /\.scss$/,
-                use: ['css-hot-loader'].concat(ExtractTextPlugin.extract({
-                    fallback: "style-loader",
-                    use: [
-                        { loader: "css-loader", options: { sourceMap: true, url: false } },
-                        // { loader: "postcss-loader", options: { sourceMap: true } },
-                        {
-                            loader: "sass-loader",
-                            options: {
-                                sourceMap: true,
-                                outputStyle: "expanded",
-                                sourceMapContents: true
-                            }
+                use: [
+                    'css-hot-loader',
+                    MiniCssExtractPlugin.loader,
+                    {
+                        loader: "css-loader",
+                        options: {
+                            sourceMap: true,
+                            url: false
                         }
-                    ]
-                }))
+                    },
+                    {
+                        loader: "sass-loader",
+                        options: {
+                            sourceMap: true,
+                            outputStyle: "expanded",
+                            sourceMapContents: true
+                        }
+                    }
+                ]
             }
         ]
     },
     // ----- Webpack dev server options
     devServer: {
-        contentBase: dirs.output,
+        contentBase: paths.output,
         watchContentBase: true,
         compress: true,
         port: 3300,
@@ -57,8 +62,8 @@ module.exports = {
     },
     plugins: [
         // ----- Output compiled css file
-        new ExtractTextPlugin({
-            filename: dirs.cssOutput,
+        new MiniCssExtractPlugin({
+            filename: paths.cssOutput,
             allChunks: true
         }),
         new WebpackBuildNotifierPlugin({
