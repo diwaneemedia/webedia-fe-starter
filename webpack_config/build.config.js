@@ -1,4 +1,6 @@
 const MiniCssExtractPlugin = require("mini-css-extract-plugin"),
+      CopyWebpackPlugin = require('copy-webpack-plugin'),
+      ImageminPlugin = require('imagemin-webpack-plugin').default,
       path = require('path'),
       paths = require('./paths.js');
 
@@ -44,5 +46,23 @@ module.exports = {
             }
         ]
     },
-    plugins: [ new MiniCssExtractPlugin({ filename: paths.cssOutput }) ]
+    plugins: [
+        new MiniCssExtractPlugin({ filename: paths.cssOutput }),
+        new CopyWebpackPlugin([
+            {
+                from: 'src/assets/fonts/',
+                to: 'assets/fonts/[name].[ext]'
+            },
+            {
+                from: 'src/assets/images/',
+                to: 'assets/images/[name].[ext]'
+            }
+        ]),
+        new ImageminPlugin({
+            test: /\.(jpe?g|png|gif|svg)$/i,
+            pngquant: {
+                quality: '90'
+            }
+        })
+    ]
 };
